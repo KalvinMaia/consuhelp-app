@@ -59,9 +59,9 @@ consuhelp/
         ├── java/com/consuhelp/client/
         │   ├── ConsuHelpApp.java          ← Entry point JavaFX
         │   ├── controller/
-        │   │   ├── LoginController.java   ← Tela 4.1
-        │   │   ├── DashboardController.java ← Tela 4.2
-        │   │   ├── CategoriaController.java ← Tela 4.3
+        │   │   ├── LoginController.java   
+        │   │   ├── DashboardController.java 
+        │   │   ├── CategoriaController.java 
         │   │   └── ResultadoController.java
         │   ├── model/
         │   │   ├── ConsultaResponse.java
