@@ -9,10 +9,9 @@
     <artifactId>consuhelp</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
-    <name>ConsuHelp - Projeto Raiz</name>
+    <name>ConsuHelp</name>
     <description>
         Central Inteligente de Assistência Jurídica ao Consumidor.
-        IMD0040 - Linguagem de Programação II (2026.1) - UFRN/IMD
     </description>
 
     <modules>
