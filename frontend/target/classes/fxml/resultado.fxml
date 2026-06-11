@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.consuhelp.client.controller.ResultadoController"
+            styleClass="tela-raiz"
+            prefWidth="800" prefHeight="600">
+
+    <!-- ── Cabeçalho ─────────────────────────────────────────────────────── -->
+    <top>
+        <HBox styleClass="cabecalho" alignment="CENTER_LEFT">
+            <Label text="ConsuHelp" styleClass="titulo-app" HBox.hgrow="ALWAYS"/>
+            <Label fx:id="labelStatus" styleClass="label-status-resultado"/>
+        </HBox>
+    </top>
+
+    <!-- ── Conteúdo principal ────────────────────────────────────────────── -->
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="scroll-resultado">
+            <VBox spacing="16">
+                <padding><Insets top="20" right="30" bottom="20" left="30"/></padding>
+
+                <Label text="Plano de Ação para Seu Caso" styleClass="titulo-resultado"/>
+                <Label fx:id="labelId" styleClass="label-id"/>
+
+                <!-- Diagnóstico Legal -->
+                <VBox spacing="6" styleClass="secao-resultado">
+                    <Label text="⚖️  Diagnóstico Legal" styleClass="label-secao"/>
+                    <TextArea fx:id="areaDiagnostico"
+                              styleClass="area-resultado"
+                              editable="false" wrapText="true"
+                              prefRowCount="4"/>
+                </VBox>
+
+                <!-- Canal Recomendado -->
+                <VBox spacing="6" styleClass="secao-resultado">
+                    <Label text="📍  Canal Recomendado" styleClass="label-secao"/>
+                    <TextArea fx:id="areaCanal"
+                              styleClass="area-resultado"
+                              editable="false" wrapText="true"
+                              prefRowCount="3"/>
+                </VBox>
+
+                <!-- Próximos Passos -->
+                <VBox spacing="6" styleClass="secao-resultado">
+                    <Label text="✅  Próximos Passos" styleClass="label-secao"/>
+                    <TextArea fx:id="areaPassos"
+                              styleClass="area-resultado"
+                              editable="false" wrapText="true"
+                              prefRowCount="6"/>
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+
+    <!-- ── Rodapé: ações ─────────────────────────────────────────────────── -->
+    <bottom>
+        <HBox styleClass="rodape-resultado" spacing="12" alignment="CENTER">
+            <padding><Insets top="12" right="30" bottom="16" left="30"/></padding>
+            <Button text="Nova Consulta" styleClass="btn-primario"
+                    onAction="#onNovaConsulta"/>
+            <Button text="Ver Categorias" styleClass="btn-secundario"
+                    onAction="#onVerCategorias"/>
+        </HBox>
+    </bottom>
+</BorderPane>

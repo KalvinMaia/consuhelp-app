@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.consuhelp.client.controller.LoginController"
+            styleClass="tela-raiz"
+            prefWidth="800" prefHeight="600">
+
+    <!-- ── Cabeçalho ─────────────────────────────────────────────────────── -->
+    <top>
+        <HBox styleClass="cabecalho" alignment="CENTER_LEFT">
+            <Button text="☰" styleClass="btn-menu" onAction="#onConfiguracoes"/>
+            <Label text="ConsuHelp" styleClass="titulo-app" HBox.hgrow="ALWAYS"/>
+        </HBox>
+    </top>
+
+    <!-- ── Corpo: painel de login centralizado ───────────────────────────── -->
+    <center>
+        <StackPane>
+            <VBox styleClass="painel-login" alignment="CENTER" spacing="16">
+                <padding><Insets top="40" right="50" bottom="40" left="50"/></padding>
+
+                <Label text="ConsuHelp" styleClass="titulo-login"/>
+                <Label text="Acesso ao sistema" styleClass="subtitulo-login"/>
+
+                <!-- Campo Login -->
+                <VBox spacing="4">
+                    <Label text="Login" styleClass="label-campo"/>
+                    <TextField fx:id="campoLogin" promptText="Seu usuário"
+                               styleClass="campo-texto"/>
+                </VBox>
+
+                <!-- Campo Senha -->
+                <VBox spacing="4">
+                    <Label text="Senha" styleClass="label-campo"/>
+                    <PasswordField fx:id="campoSenha" promptText="Sua senha"
+                                   styleClass="campo-texto"/>
+                </VBox>
+
+                <!-- Mensagem de erro -->
+                <Label fx:id="labelErro" styleClass="label-erro" visible="false"/>
+
+                <!-- Botão Entrar -->
+                <Button text="Entrar" styleClass="btn-primario"
+                        onAction="#onEntrar" maxWidth="Infinity"/>
+
+                <Label text="Demo: qualquer login + senha 1234"
+                       styleClass="label-dica"/>
+            </VBox>
+        </StackPane>
+    </center>
+</BorderPane>
