@@ -1,6 +1,6 @@
 # ConsuHelp
 
-> **Central Inteligente de Assistência Jurídica ao Consumidor**
+> **Central Inteligente de Assistência e Consultoria Jurídica ao Consumidor**
 
 ## Descrição
 
