@@ -71,7 +71,7 @@ consuhelp/
 
 ### 1. Backend Spring Boot 3+ ("consuhelp-backend")
 
-- **Integração com Google Gemini**: Usando a biblioteca **Spring AI 1.1.8** com suporte nativo ao modelo `gemini-1.5-flash`.
+- **Integração com Google Gemini**: Usando a biblioteca **Spring AI 1.1.8** com suporte nativo ao modelo `gemini-2.5-flash`.
 - **Fallback Inteligente (Mock Mode)**: Caso não haja chave de API definida (valor default `mock-mode`), ou em caso de erros de conexão/limites de quota, o backend ativa de forma transparente um sistema local de processamento inteligente. Ele analisa palavras-chave do conflito em tempo real (como "geladeira", "voo", "negativação", etc.) e gera um plano de ação dinâmico e contextualizado de acordo com o Código de Defesa do Consumidor (CDC).
 - **Repositório em Memória**: Implementado usando `ConcurrentHashMap` thread-safe.
 - **APIs REST expostas**:
@@ -133,21 +133,70 @@ O backend retornou o plano perfeitamente estruturado em JSON com base no CDC:
 }
 ```
 
+## Execução do aplicativo
+
+
+### 1. Pré-requisitos
+Certifique-se de ter instalado:
+* **Java JDK 17 ou superior**:
+* **Apache Maven**.
+
 ---
 
-## Como Executar o Sistema Localmente
+### 2. Configurando a Chave de API do Gemini (Opcional)
+Se você deseja que o backend utilize a sua API Key do Gemini em vez da chave fixa gravada no código, você pode defini-la como uma variável de ambiente antes de iniciar o servidor:
 
-Para interagir com o ConsulHelp diretamente, utilize os comandos abaixo apontando para o seu **JDK 26** (exemplo de diretório possível: `C:\Program Files\Java\jdk-26.0.1`):
+* **No PowerShell:**
+  ```powershell
+  $env:GEMINI_API_KEY="SuaChaveDeAPIAqui"
+  ```
+* **No Prompt de Comando (CMD):**
+  ```cmd
+  set GEMINI_API_KEY=SuaChaveDeAPIAqui
+  ```
 
-### 1. Iniciar o Backend
-```powershell
-# No diretório consuhelp-backend:
-& "C:\Program Files\Java\jdk-26.0.1\bin\java.exe" -jar target\consuhelp-backend-1.0.0.jar
-```
+---
 
-### 2. Iniciar o Frontend JavaFX
-```powershell
-# No diretório consuhelp-frontend:
-$env:JAVA_HOME="C:\Program Files\Java\jdk-26.0.1"
-mvn javafx:run
-```
+### 3. Passo a Passo para Execução no Terminal
+
+Como o ConsuHelp é uma aplicação cliente-servidor, você precisará de **dois terminais** abertos.
+
+#### ☕ Passo A: Iniciando o Backend (Servidor)
+1. Abra um terminal (PowerShell ou CMD).
+2. Navegue até a pasta do backend:
+   ```powershell
+   cd "\consuhelp\consuhelp-backend"
+   ```
+3. Execute o comando Maven para rodar a aplicação:
+   ```powershell
+   mvn spring-boot:run
+   ```
+   *(O servidor estará ativo quando aparecer a mensagem indicando que o Tomcat iniciou na porta **8080**).*
+
+---
+
+#### 💻 Passo B: Iniciando o Frontend (Interface JavaFX)
+1. Abra um **segundo** terminal.
+2. Navegue até a pasta do frontend:
+   ```powershell
+   cd "\consuhelp\consuhelp-frontend"
+   ```
+3. Execute o plugin do JavaFX para inicializar a tela (o Maven cuidará de carregar as dependências visuais e a arquitetura de módulos do OpenJFX automaticamente):
+   ```powershell
+   mvn javafx:run
+   ```
+   *(A janela do ConsuHelp se abrirá imediatamente e se conectará ao backend).*
+
+---
+
+### 4. Executando por uma IDE (IntelliJ IDEA / VS Code / Eclipse)
+
+Se preferir rodar de dentro de uma IDE para desenvolvimento:
+1. **Importar Projetos**: Abra a IDE e selecione **"Open"** ou **"Import"**, escolhendo a pasta raiz `consuhelp` como um projeto Maven multi-módulo (ou importe `consuhelp-backend` e `consuhelp-frontend` individualmente).
+2. **Executar o Backend**:
+   - Localize o arquivo `BackendApplication.java` (em `src/main/java/br/com/consuhelp/backend/`).
+   - Clique com o botão direito e selecione **Run**.
+3. **Executar o Frontend**:
+   - Localize o arquivo `AppLauncher.java` (em `src/main/java/br/com/consuhelp/frontend/`).
+   - Clique com o botão direito e selecione **Run**.
+   *(Nota: O `AppLauncher` foi criado especificamente para permitir que a interface JavaFX seja iniciada sem a necessidade de configurar parâmetros complexos de módulos da VM na IDE).*
