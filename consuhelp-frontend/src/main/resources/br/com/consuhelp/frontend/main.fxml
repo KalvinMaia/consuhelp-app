@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="br.com.consuhelp.frontend.controller.MainController"
+            styleClass="main-container">
+
+    <!-- Sidebar (Left Pane) -->
+    <left>
+        <VBox prefWidth="280" styleClass="sidebar">
+            <padding>
+                <Insets top="20" right="15" bottom="20" left="15"/>
+            </padding>
+            
+            <!-- App Logo/Header -->
+            <HBox alignment="CENTER_LEFT" spacing="10" styleClass="logo-container">
+                <ImageView fitWidth="26" fitHeight="26" preserveRatio="true">
+                    <image>
+                        <Image url="@logo.png"/>
+                    </image>
+                </ImageView>
+                <Label text="ConsuHelp" styleClass="logo-text"/>
+            </HBox>
+            
+            <Separator styleClass="sidebar-separator">
+                <VBox.margin>
+                    <Insets top="15" bottom="15"/>
+                </VBox.margin>
+            </Separator>
+            
+            <!-- New Consultation Button -->
+            <Button fx:id="btnNewConsultation" text="+ Nova Consulta" 
+                    onAction="#handleNewConsultation" maxWidth="Infinity" styleClass="btn-primary">
+                <VBox.margin>
+                    <Insets bottom="20"/>
+                </VBox.margin>
+            </Button>
+            
+            <!-- History Section -->
+            <Label text="Histórico de Consultas" styleClass="sidebar-section-title">
+                <VBox.margin>
+                    <Insets bottom="10"/>
+                </VBox.margin>
+            </Label>
+            
+            <ListView fx:id="lvHistory" VBox.vgrow="ALWAYS" styleClass="history-list"/>
+            
+            <!-- Status Info at bottom -->
+            <HBox alignment="CENTER_LEFT" spacing="5" styleClass="status-container">
+                <VBox.margin>
+                    <Insets top="15"/>
+                </VBox.margin>
+                <Circle fx:id="statusDot" radius="5" fill="#22c55e"/>
+                <Label fx:id="lblConnectionStatus" text="Conectado ao Servidor" styleClass="status-text"/>
+            </HBox>
+        </VBox>
+    </left>
+
+    <!-- Main Content Area -->
+    <center>
+        <StackPane styleClass="content-area">
+            
+            <!-- 1. Form Pane (New Consultation Form) -->
+            <VBox fx:id="paneForm" spacing="20" alignment="TOP_LEFT" styleClass="form-pane">
+                <padding>
+                    <Insets top="40" right="40" bottom="40" left="40"/>
+                </padding>
+                
+                <VBox spacing="5">
+                    <Label text="Como podemos ajudar você hoje?" styleClass="main-title"/>
+                    <Label text="Descreva o seu problema e nós mostraremos o melhor caminho para resolver." 
+                           styleClass="main-subtitle" wrapText="true"/>
+                </VBox>
+                
+                <TextArea fx:id="txtDescription" promptText="Ex: Comprei um notebook há 15 dias na internet. Ontem ele parou de ligar. Entrei em contato com a loja e eles disseram que eu teria que resolver diretamente com o fabricante e que a troca não seria feita por eles..." 
+                          VBox.vgrow="ALWAYS" wrapText="true" styleClass="input-textarea"/>
+                
+                <HBox alignment="CENTER_RIGHT" spacing="10">
+                    <Button fx:id="btnAnalyze" text="Analisar problema e obter soluções" 
+                            onAction="#handleAnalyze" styleClass="btn-accent" prefHeight="45" prefWidth="250"/>
+                </HBox>
+            </VBox>
+            
+            <!-- 2. Loading Overlay Pane -->
+            <VBox fx:id="paneLoading" alignment="CENTER" spacing="20" styleClass="loading-pane" visible="false">
+                <ProgressIndicator fx:id="progressIndicator" prefWidth="60" prefHeight="60" styleClass="custom-progress"/>
+                <Label text="Analisando o seu problema..." styleClass="loading-title"/>
+                <Label text="Estamos obtendo as informações necessárias para resolver o seu problema..." styleClass="loading-subtitle"/>
+            </VBox>
+            
+            <!-- 3. Result Pane -->
+            <ScrollPane fx:id="paneResult" fitToWidth="true" styleClass="result-scrollpane" visible="false">
+                <VBox spacing="25" styleClass="result-container">
+                    <padding>
+                        <Insets top="35" right="35" bottom="35" left="35"/>
+                    </padding>
+                    
+                    <!-- Back Button and Title Header -->
+                    <HBox alignment="CENTER_LEFT" spacing="15">
+                        <Button text="← Voltar" onAction="#handleNewConsultation" styleClass="btn-secondary"/>
+                        <Label text="Análise do Caso" styleClass="section-tag"/>
+                    </HBox>
+                    
+                    <!-- Header with Title and Recommended Path -->
+                    <VBox spacing="10" styleClass="result-header-card">
+                        <padding>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
+                        </padding>
+                        <Label fx:id="lblResultTitle" text="Defeito em Notebook Novo" styleClass="result-title" wrapText="true"/>
+                        
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+                            <Label text="Canal Recomendado:" styleClass="result-label-gray"/>
+                            <Label fx:id="lblRecommendedPath" text="Consumidor.gov.br" styleClass="badge-recommended"/>
+                        </HBox>
+                    </VBox>
+                    
+                    <!-- Legal Summary Card -->
+                    <VBox spacing="10" styleClass="card">
+                        <padding>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
+                        </padding>
+                        <Label text="Resumo Jurídico da Ocorrência" styleClass="card-title"/>
+                        <Label fx:id="lblResultSummary" text="Resumo detalhado..." styleClass="card-text" wrapText="true"/>
+                    </VBox>
+                    
+                    <!-- Applicable Laws (CDC Articles) -->
+                    <VBox spacing="12" styleClass="card">
+                        <padding>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
+                        </padding>
+                        <Label text="Embasamento Legal (Código de Defesa do Consumidor)" styleClass="card-title"/>
+                        <VBox fx:id="vboxApplicableLaws" spacing="8" styleClass="laws-container"/>
+                    </VBox>
+                    
+                    <!-- Step by Step Plan -->
+                    <VBox spacing="12" styleClass="card">
+                        <padding>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
+                        </padding>
+                        <Label text="Plano de Ação Recomendado" styleClass="card-title"/>
+                        <VBox fx:id="vboxSteps" spacing="8" styleClass="steps-container"/>
+                    </VBox>
+                    
+                    <!-- Required Documents -->
+                    <VBox spacing="12" styleClass="card">
+                        <padding>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
+                        </padding>
+                        <Label text="Documentos Necessários para Reclamação" styleClass="card-title"/>
+                        <VBox fx:id="vboxDocuments" spacing="8" styleClass="docs-container"/>
+                    </VBox>
+                    
+                    <!-- Additional Notes -->
+                    <VBox spacing="10" styleClass="card-warning">
+                        <padding>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
+                        </padding>
+                        <Label text="Observações e Prazos Importantes" styleClass="card-warning-title"/>
+                        <Label fx:id="lblAdditionalNotes" text="Notas adicionais..." styleClass="card-text" wrapText="true"/>
+                    </VBox>
+                </VBox>
+            </ScrollPane>
+            
+        </StackPane>
+    </center>
+</BorderPane>
